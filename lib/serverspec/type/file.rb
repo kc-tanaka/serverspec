@@ -117,5 +117,56 @@ module Serverspec::Type
     def selinux_label
       @runner.get_file_selinuxlabel(@name).stdout.strip
     end
+
+
+    # custome matcher
+    def has_qhm?(theme)
+      qhm = [
+        # directories
+        'wiki',
+        'plugin',
+        'skin',
+        'swfu',
+        'fwd3',
+        'lib',
+        'attach',
+        'backup',
+        'cache',
+        'cacheqhm',
+        'cacheqblog',
+        'counter',
+        'diff',
+        'image',
+        'js',
+        # files
+        'QHMProfessional.txt',
+        'pukiwiki.ini.php',
+        'index.php',
+        'qhm.ini.php',
+        'rules.ini.php',
+        'default.ini.php'
+      ]
+
+      if theme != nil
+        flag = @runner.check_file_is_directory(@name + "/skin/hokukenstyle/#{theme}")
+      else
+        # skip!
+        flag = true
+      end
+
+      qhm.each do |file|
+        if file.include?('.')
+          cmd = Specinfra.command.get(:check_file_is_file, @name+'/'+file)
+          @inspection = Specinfra.backend.build_command(cmd)
+          flag = @runner.check_file_is_file(@name+'/'+file)
+        else
+          flag = @runner.check_file_is_directory(@name+'/'+file)
+        end
+
+        break unless flag
+      end
+
+      return flag
+    end
   end
 end

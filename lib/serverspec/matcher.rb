@@ -5,6 +5,9 @@ require 'serverspec/matcher/be_readable'
 require 'serverspec/matcher/be_writable'
 require 'serverspec/matcher/be_executable'
 
+# custome file matcher
+require 'serverspec/matcher/have_qhm'
+
 # port
 require 'serverspec/matcher/be_listening'
 
