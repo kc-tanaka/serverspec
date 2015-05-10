@@ -146,25 +146,25 @@ module Serverspec::Type
       ]
 
       if theme != nil
-        flag = @runner.check_file_is_directory(@name + "/skin/hokukenstyle/#{theme}")
+        theme_exists = @runner.check_file_is_directory(@name + "/skin/hokukenstyle/#{theme}")
       else
         # skip!
-        flag = true
+        theme_exists = true
       end
 
       qhm.each do |file|
         if file.include?('.')
           cmd = Specinfra.command.get(:check_file_is_file, @name+'/'+file)
           @inspection = Specinfra.backend.build_command(cmd)
-          flag = @runner.check_file_is_file(@name+'/'+file)
+          qhm_exists = @runner.check_file_is_file(@name+'/'+file)
         else
-          flag = @runner.check_file_is_directory(@name+'/'+file)
+          qhm_exists = @runner.check_file_is_directory(@name+'/'+file)
         end
 
-        break unless flag
+        break unless qhm_exists
       end
 
-      return flag
+      return qhm_exists && theme_exists
     end
   end
 end
