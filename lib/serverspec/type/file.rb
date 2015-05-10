@@ -138,7 +138,6 @@ module Serverspec::Type
         'image',
         'js',
         # files
-        'QHMProfessional.txt',
         'pukiwiki.ini.php',
         'index.php',
         'qhm.ini.php',
