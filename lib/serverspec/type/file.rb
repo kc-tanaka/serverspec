@@ -145,6 +145,9 @@ module Serverspec::Type
         'default.ini.php'
       ]
 
+      qhm_exists   = false
+      theme_exists = false
+
       if theme != nil
         theme_exists = @runner.check_file_is_directory(@name + "/skin/hokukenstyle/#{theme}")
       else
@@ -152,7 +155,7 @@ module Serverspec::Type
         theme_exists = true
       end
 
-      qhm.each do |file|
+      for file in qhm
         if file.include?('.')
           cmd = Specinfra.command.get(:check_file_is_file, @name+'/'+file)
           @inspection = Specinfra.backend.build_command(cmd)
