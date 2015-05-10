@@ -133,7 +133,6 @@ module Serverspec::Type
         'backup',
         'cache',
         'cacheqhm',
-        'cacheqblog',
         'counter',
         'diff',
         'image',
